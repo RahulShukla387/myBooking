@@ -1,6 +1,8 @@
 //todo Importing dotenv file and its access to use
-import 'dotenv/config'
-// console.log(process.env); //it will print the key pair of secret of env file
+// import 'dotenv/config'
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from "express";
 const app = express();
 //todo importing wrapAsync function and myError fucntion , SchemaValidationn i.e from joi , review module
@@ -63,7 +65,7 @@ import LocalStrategy from "passport-local";
  import isLoggedin from "./middleware.js";
 import MongoStore from 'connect-mongo';
 //todo starting port
-const port = 8080;
+const port = process.env.PORT || 8080;
 app.listen(port, ()=>{
     console.log("app listening ");
 })
