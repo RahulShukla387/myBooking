@@ -1,1 +1,1 @@
-# FullStackProject-Replica-of-Airbnb
+# FullStackProject myBooking (Replica-of-Airbnb)
