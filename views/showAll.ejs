@@ -1,83 +1,91 @@
 <%- layout("/layouts/boilerplate.ejs") %>
-<body id="background">
-  <div class="container mt-4">
-     <div class="filters">
-      <div class="filter">
-        <i class="fa-solid fa-house-user"></i> <br>
-        <p><b>rooms</b></p>
+
+<div class="container mt-4">
+  
+  <div class="filters-wrapper">
+    <div class="filters-scroller">
+      <div class="filter-item">
+        <i class="fa-solid fa-house-user"></i>
+        <p>Rooms</p>
       </div>
-      <div class="filter">
-        <i class="fa-solid fa-arrow-trend-up"></i> <br>
-        <p><b>Trending</b></p>
+      <div class="filter-item">
+        <i class="fa-solid fa-arrow-trend-up"></i>
+        <p>Trending</p>
       </div>
-      <div class="filter">
-        <i class="fa-solid fa-fire"></i> <br>
-        <p><b>Camping</b></p>
+      <div class="filter-item">
+        <i class="fa-solid fa-fire"></i>
+        <p>Camping</p>
       </div>
-      <div class="filter">
-        <i class="fa-solid fa-gamepad"></i> <br>
-        <p><b>play</b></p>
+      <div class="filter-item">
+        <i class="fa-solid fa-gamepad"></i>
+        <p>Play</p>
       </div>
-      <div class="filter">
-        <i class="fa-solid fa-kitchen-set"></i> <br>
-        <p><b>Kitchen</b></p>
+      <div class="filter-item">
+        <i class="fa-solid fa-kitchen-set"></i>
+        <p>Kitchen</p>
       </div>
-      <div class="filter">
-        <i class="fa-solid fa-bed"></i> <br>
-        <p><b>Beds</b></p>
+      <div class="filter-item">
+        <i class="fa-solid fa-bed"></i>
+        <p>Beds</p>
       </div>
-      <div class="filter">
-        <i class="fa-solid fa-plus"></i><br>
-        <p><b>New</b></p>
+      <div class="filter-item">
+        <i class="fa-solid fa-plus"></i>
+        <p>New</p>
       </div>
-      <div class="filter">
-        <i class="fa-solid fa-umbrella-beach"></i> <br>
-        <p><b>Beach</b></p>
+      <div class="filter-item">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <p>Beach</p>
       </div>
-     </div>    
-      <div class="filter">
-        <div class="form-check-reverse form-switch">
-          <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
-          <label class="form-check-label" for="switchCheckDefault">Cost with Added GST </label> <br>
-        </div>
+    </div>
+    
+    <div class="tax-toggle-box">
+      <div class="form-check form-switch form-check-reverse m-0">
+        <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+        <label class="form-check-label" for="switchCheckDefault">Display total with GST</label>
       </div>
-     </div>     <br>
- 
-          
-    <div class="row">
-      <% for(let list of listings) { %>
-      <% if (list.approved){ %>
-        <div class="col-md-4 mb-4 sameHeight">
-          <div class="card" style="width: 100%;">
-            <a href="/listing/<%= list.id %>" class="link">
-            <img src="<%= list.image.url %>" class="card-img-top" alt="resort image" height="300px" width="300px" >
-            <div class="card-body">
-              <h5 class="card-title"><b><i>Title:</i></b> <%= list.title %></h5>
-              <p class="card-text"><b><i>Description:</i></b> <%= list.description %></p>
-              <p class="card-text"><b><i>Location:</i></b> <%= list.location %></p>
-              <p class="card-text"><b><i>Country:</i></b> <%= list.country %></p>
-              <p class="card-text"><b><i>Price: </i></b><i>&#8377;</i> <%= list.price.toLocaleString("en-IN") %>/ night &nbsp; <span class="GST"> +15% GST</span> </p>
-            </div>
-          </div>
-        </a>
-        </div>
-        <% } %>
-      <% } %>
     </div>
   </div>
-  <script>
-    let switchbtn=  document.querySelector("#switchCheckDefault");
-    switchbtn.addEventListener("click", ()=>{
-      let tax =  document.querySelectorAll(".GST");
-        // console.log(tax);
-        for(list of tax){
-          if(list.style.display != "inline"){
-            list.style.display = "inline"
-          }
-          else{
-            list.style.display = "none"
-          }
-        }
-    })
-   </script>
-</body>
+
+  <div class="row g-4">
+    <% for(let list of listings) { %>
+      <% if (list.approved){ %>
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+          <a href="/listing/<%= list.id %>" class="text-decoration-none">
+            <div class="card room-card">
+              <div class="room-img-wrapper">
+                <img src="<%= list.image.url %>" class="room-img" alt="<%= list.title %>">
+              </div>
+              <div class="room-details">
+                <h5 class="room-title"><%= list.title %></h5>
+                <p class="room-meta mb-1">
+                  <i class="fa-solid fa-location-dot text-danger"></i> <%= list.location %>, <%= list.country %>
+                </p>
+                <p class="room-meta text-truncate">
+                  <%= list.description %>
+                </p>
+                <div class="room-price-tag">
+                  &#8377; <%= list.price.toLocaleString("en-IN") %> <span class="text-white-50 font-monospace text-xs" style="font-size: 0.75rem;">/ night</span>
+                  <span class="GST">+15% GST</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      <% } %>
+    <% } %>
+  </div>
+</div>
+
+<script>
+  let switchbtn = document.querySelector("#switchCheckDefault");
+  switchbtn.addEventListener("click", () => {
+    let taxElements = document.querySelectorAll(".GST");
+    for (let tax of taxElements) {
+      if (tax.style.display !== "inline") {
+        tax.style.display = "inline";
+      } else {
+        tax.style.display = "none";
+      }
+    }
+  });
+</script>

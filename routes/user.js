@@ -18,7 +18,7 @@ import isLoggedin from '../middleware.js';
             email: user.email,
         })
        let registeredUser=  await User.register(user1, user.password);
-       console.log(user);
+    //    console.log(user);
        req.login(registeredUser, (err)=>{
         if(err){
             console.log(err);

@@ -1,20 +1,33 @@
-  <!-- importing the layouts from the boilerplate.ejs using ejs-mate -->
-<%- layout("/layouts/boilerplate.ejs")  %>
-<body id="background">
-    <h1>You can enjoy at:</h1>
-       <!-- <b> <i> <a href="http://localhost:8080/showAll">Show all together</a> <br><hr> </i></b>  -->
-       <!-- <b> <i> <a href="http://localhost:8080/newlisting">Add a new list</a> <br> </i></b>  -->
-     <% for(list of listings){ %>
+<%- layout("/layouts/boilerplate.ejs") %>
+
+<div class="container list-wrapper">
+  <h1 class="mb-4 text-start" style="font-size: 1.75rem;"><i class="fa-solid fa-folder-open text-xs me-2" style="color: var(--accent);"></i> Active Property Listings</h1>
+  
+  <div class="d-flex flex-column">
+    <% for(list of listings){ %>
       <% if (list.approved){ %>
-        <ul>
-            <li>
-        <a href="/listing/<%= list.id %>"><%= list.title  %></a>
-            </li>
-     <% if(currUser && currUser._id.toString() === list.owner._id.toString()){ %>
-              <a href="/edit/<%= list.id %>" class="button link"> <b><i>Edit Post</i></b> </a>
-              <% } %>
-          </ul>
-            <hr>
-        <% } %>
-        <% } %>
-</body>
+        <div class="management-card">
+          
+          <div class="management-info">
+            <i class="fa-solid fa-hotel"></i>
+            <a href="/listing/<%= list.id %>" class="management-title-link">
+              <%= list.title %>
+            </a>
+          </div>
+          
+          <div class="management-actions">
+            <a href="/listing/<%= list.id %>" class="btn-manage-edit" style="background: transparent; color: var(--accent) !important;">
+              <i class="fa-solid fa-eye"></i> View
+            </a>
+            <% if(currUser && currUser._id.toString() === list.owner._id.toString()){ %>
+              <a href="/edit/<%= list.id %>" class="btn-manage-edit">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              </a>
+            <% } %>
+          </div>
+
+        </div>
+      <% } %>
+    <% } %>
+  </div>
+</div>

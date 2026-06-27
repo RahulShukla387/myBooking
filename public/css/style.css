@@ -1,105 +1,782 @@
- #background{
-    /* background-image: url("https://res.cloudinary.com/di3sion8u/image/upload/v1745416240/BookRooms/domm6b09qmdyqnji7ikt.jpg" ); */
-    background-size: contain;
-    position: relative; 
-    background-color: rgb(10,25,47, 0.4);
- }
-.navbar{
-    height: 4rem;
-}
-.fa-hotel{
-font-size: 2rem;
-}
-.nav-link{
-    color: black;
-}
-.footer{
-    display: flex;
-    justify-content: space-evenly;
-    background-color: rgb(212, 229, 247);
-    flex-wrap: wrap;
-    align-items: center;
-    height: 4rem;
-}
-.item{
-    background-color: rgb(212, 229, 247);
-    align-items: space-evenly;
 
-}
-.link{
-text-decoration: none;
-color: black;
+   /* ==========================================================================
+   1. GLOBAL RENDER & VARIABLES
+   ========================================================================== */
+:root {
+    --bg-primary: #0a192f;
+    --bg-surface: #112240;
+    --bg-surface-light: #233554;
+    --text-main: #e6f1ff;
+    --text-muted: #8892b0;
+    --accent: #64ffda; /* Teal accent for highlights/links */
+    --accent-hover: rgba(100, 255, 218, 0.2);
+    --btn-primary: #4f46e5; /* Indigo for strong actions */
+    --btn-hover: #4338ca;
+    --border-color: #30363d;
+    --danger: #ef4444;
+    --success: #10b981;
 }
 
-.newlist{
-    height: 2rem;
-    width: 70%;
-    border-radius: 5px;
-    background-color: rgb(207, 207, 215);
-}
-body{
+body {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-main);
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
 }
-.container{
-   flex: 1; 
+
+/* Base link behavior */
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
-.button{
-    width: 7rem;
-    height: 2rem;
-    border-radius: 30%;
-    background-color: rgb(186, 114, 114);
+a:hover {
+    color: #fff;
 }
-.comment{
-    background-color: rgb(201, 200, 200);
-    border-radius: 1rem;
-    width: 50%;
+
+/* ==========================================================================
+   2. LAYOUT & CONTAINERS
+   ========================================================================== */
+.container {
+    flex: 1;
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
 }
-.reviews{
-    border: 1px solid rgb(178, 182, 213);
-    border-radius:1rem ;
-    background-color: rgb(218, 218, 124);
-}
- .center{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight: bolder;
-    background-color: rgb(165, 165, 115);
-    border: 2px solid yellow;
-    
-}
-.shiftCenter{
-     /* display: flex;  It will display all the content in same horizontal line  use display direction column along with it ;  */
-     display: flex;
+
+/* Flex utilities for centering layouts gracefully */
+.shiftCenter {
+    display: flex;
     flex-direction: column;
-     align-items: center;
-     justify-content: center;
-} 
-
-.photoCenter{
-    display: flex;
-     align-items: center;
-     justify-content: center;
-}  
-.sameHeight{
-    width: 27rem;
-    height: 35rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
-.filters{
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .filter{
-    /* text algn is very important style used to take the test in center. */
-   text-align: center;  
-   margin-left: 6rem;
-        }
 
-    .GST{
-    /* Display: inline; means that you want to show the object by default it is in inline  */
-    display: none;  
-   }    
-   .navBackGround{
-    background-color: rgba(121, 65, 176, 0.1);
-    /* opacity: 0.5; */
-   }
+.photoCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   3. FORMS & AUTH PAGES (Login / Signup)
+   ========================================================================== */
+/* Wraps the raw forms into beautiful centered cards */
+form {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 450px;
+    margin: 2rem auto;
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+}
+
+h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    letter-spacing: -0.5px;
+}
+
+label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+    text-align: left;
+}
+
+/* Form Control override for Bootstrap integration */
+.form-control {
+    background-color: var(--bg-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-main) !important;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.15) !important;
+    outline: none;
+}
+
+/* Primary Action Buttons */
+.button, input[type="submit"] {
+    display: inline-block;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--btn-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 1rem;
+}
+
+.button:hover, input[type="submit"]:hover {
+    background-color: var(--btn-hover);
+}
+
+.button:active, input[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+/* ==========================================================================
+   4. ABOUT PAGE SPECIFIC STYLES
+   ========================================================================== */
+#about {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 700px;
+    margin: 1.5rem auto;
+    text-align: left;
+}
+
+#about h2 {
+    color: var(--accent);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+#about p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+}
+
+/* Owner Image */
+.image-profile {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
+    margin-bottom: 1rem;
+}
+
+.owner-name {
+    font-size: 1.25rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   5. ADMIN / APPROVAL PAGE
+   ========================================================================== */
+.approval-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 1.25rem 2rem;
+    border-radius: 8px;
+    margin: 1rem auto;
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.approval-card a {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.btn-approve {
+    width: auto !important;
+    margin-top: 0 !important;
+    background-color: var(--success) !important;
+    padding: 0.5rem 1.2rem !important;
+    font-size: 0.9rem !important;
+}
+.btn-approve:hover {
+    background-color: #059669 !important;
+}
+
+/* ==========================================================================
+   6. GLOBAL APP FOOTER (From Boilerplate context)
+   ========================================================================== */
+.footer {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-color);
+    padding: 1.5rem 1rem;
+    margin-top: auto;
+    flex-wrap: wrap;
+}
+
+.footer .item {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.footer .item a {
+    color: var(--text-muted);
+}
+.footer .item a:hover {
+    color: var(--accent);
+}
+
+/* ==========================================================================
+   7. DASHBOARD FILTERS & CATEGORIES
+   ========================================================================== */
+.filters-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.filters-scroller {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+/* Hide webkit scrollbar but allow swipe scrolling */
+.filters-scroller::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-item {
+    text-align: center;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    min-width: 60px;
+}
+
+.filter-item i {
+    font-size: 1.35rem;
+    margin-bottom: 0.4rem;
+}
+
+.filter-item p {
+    font-size: 0.75rem;
+    margin: 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-item:hover {
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* Tax Toggle Switch Styling */
+.tax-toggle-box {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 0.6rem 1.2rem;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-check-input {
+    cursor: pointer;
+}
+.form-check-input:checked {
+    background-color: var(--accent) !important;
+    border-color: var(--accent) !important;
+}
+
+.form-check-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   8. DYNAMIC ROOM CARDS GRID
+   ========================================================================== */
+.room-card {
+    background-color: var(--bg-surface) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 14px !important;
+    overflow: hidden;
+    height: 100%;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+}
+
+.room-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(2, 12, 27, 0.8);
+    border-color: var(--accent) !important;
+}
+
+.room-img-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 66.67%; /* 3:2 Aspect Ratio */
+    overflow: hidden;
+    background-color: var(--bg-primary);
+}
+
+.room-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.room-card:hover .room-img {
+    transform: scale(1.04);
+}
+
+.room-details {
+    padding: 1.25rem;
+    background-color: var(--bg-surface);
+}
+
+.room-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.room-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.room-price-tag {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+}
+
+.GST {
+    display: none;
+    font-size: 0.8rem;
+    color: #10b981;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+/* ==========================================================================
+   9. SHOWONE PAGE (Room Details & Layout Grid)
+   ========================================================================== */
+.show-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+@media (max-width: 768px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+.show-img-box {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.show-img-box img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+.info-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info-title {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 0.75rem;
+}
+
+.info-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.meta-item {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    align-items: center;
+}
+
+.btn-delete-post {
+    background-color: var(--danger) !important;
+}
+.btn-delete-post:hover {
+    background-color: #dc2626 !important;
+}
+
+.btn-edit-post {
+    background-color: var(--btn-primary);
+    text-align: center;
+    line-height: 2rem;
+    height: 2.5rem;
+    width: 8rem;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* Map Framework container overrides */
+.map-wrapper {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+#map {
+    width: 100% !important;
+    height: 280px !important;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   10. REVIEWS & RATINGS ELEMENT BLOCK
+   ========================================================================== */
+.review-section {
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+}
+
+.review-form-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 100% !important;
+    margin: 1.5rem 0 !important;
+}
+
+.review-form-card label {
+    color: #fff;
+}
+
+.comment-textarea {
+    width: 100%;
+    min-height: 100px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 8px;
+    padding: 0.75rem;
+    resize: vertical;
+    margin-bottom: 1rem;
+}
+.comment-textarea:focus {
+    border-color: var(--accent);
+    outline: none;
+}
+
+.reviews-feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 0;
+    margin-top: 1.5rem;
+}
+
+.review-card-item {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.25rem;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.review-msg {
+    color: var(--text-main);
+    font-size: 0.95rem;
+    margin: 0.5rem 0;
+}
+
+.review-author {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* ==========================================================================
+   11. FOOTER REFINEMENTS
+   ========================================================================== */
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-color);
+    padding: 1.5rem 1rem;
+    margin-top: auto;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.footer .item {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+    cursor: default;
+}
+
+/* Make raw strings look active on subtle interaction paths */
+.footer .item:hover {
+    color: var(--text-main);
+}
+
+.footer .item a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer .item a:hover {
+    color: var(--accent);
+}
+
+@media (max-width: 576px) {
+    .footer {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+        padding: 1.5rem 0.5rem;
+    }
+}
+
+/* ==========================================================================
+   12. STICKY NAVBAR OVERRIDES
+   ========================================================================== */
+.navbar {
+    background-color: rgba(17, 34, 64, 0.85) !important; /* Semi-transparent surface color */
+    backdrop-filter: blur(10px); /* Smooth premium glassmorphism effect */
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 1.5rem !important;
+    height: auto !important;
+}
+
+/* Brand Icon Logo */
+.navbar-brand {
+    color: var(--accent) !important;
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+}
+.navbar-brand:hover {
+    transform: scale(1.05);
+}
+
+/* Nav links formatting adjustments */
+.navbar-nav .nav-link {
+    color: var(--text-muted) !important;
+    font-size: 0.95rem;
+    font-weight: 500 !important;
+    padding: 0.5rem 1rem !important;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    border-radius: 4px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--accent) !important;
+    background-color: rgba(100, 255, 218, 0.05);
+}
+
+/* Highlight special action links like "Create New" or "Approve" */
+.navbar-nav .nav-link[href="/newlisting"],
+.navbar-nav .nav-link[href="/approved"] {
+    color: #fff !important;
+    border: 1px dashed rgba(100, 255, 218, 0.4);
+    margin-left: 0.25rem;
+}
+.navbar-nav .nav-link[href="/newlisting"]:hover,
+.navbar-nav .nav-link[href="/approved"]:hover {
+    border-color: var(--accent);
+    color: var(--accent) !important;
+}
+
+/* Mobile responsive hamburger adjustments */
+.navbar-toggler {
+    border-color: var(--border-color) !important;
+    padding: 0.4rem 0.6rem !important;
+}
+
+.navbar-toggler-icon {
+    /* Changes bootstrap's default black burger icon to light theme accent color */
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(100, 255, 218, 0.85)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Remove secondary wrapper backgrounds from bootstrap settings */
+.collapse.navbar-collapse {
+    background: transparent !important;
+}
+
+@media (max-width: 768px) {
+    .navbar-collapse {
+        background-color: var(--bg-surface) !important;
+        margin-top: 0.75rem;
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+    }
+    .navbar-nav .nav-link {
+        margin: 0.25rem 0;
+    }
+}
+
+/* ==========================================================================
+   13. ALL-LIST MANAGEMENT ROWS
+   ========================================================================== */
+.list-wrapper {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.management-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.25rem 1.75rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.management-card:hover {
+    border-color: rgba(100, 255, 218, 0.4);
+    box-shadow: 0 4px 20px rgba(2, 12, 27, 0.4);
+}
+
+.management-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.management-info i {
+    color: var(--accent);
+    font-size: 1.2rem;
+}
+
+.management-title-link {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    transition: color 0.2s ease;
+}
+
+.management-title-link:hover {
+    color: var(--accent);
+}
+
+.management-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.btn-manage-edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--bg-surface-light);
+    border: 1px solid var(--border-color);
+    color: #fff !important;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    height: auto;
+    width: auto;
+    transition: all 0.2s ease;
+}
+
+.btn-manage-edit:hover {
+    background-color: var(--btn-primary);
+    border-color: var(--btn-primary);
+}
+
+@media (max-width: 576px) {
+    .management-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.25rem;
+    }
+    .management-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}

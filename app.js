@@ -1,3 +1,10 @@
+
+//for Demo purpose
+// demo admin =>  email === "demoadmin@gmail.com" password demo123
+
+//for Demo Owner of Hotel
+// demoBuildingOwner => email === " demoBuildingOwner@gmail.com " , password = demoBuildingOwner123
+
 //todo Importing dotenv file and its access to use
 // import 'dotenv/config'
 import dotenv from 'dotenv';
@@ -65,7 +72,7 @@ import LocalStrategy from "passport-local";
  import isLoggedin from "./middleware.js";
 import MongoStore from 'connect-mongo';
 //todo starting port
-const port = process.env.PORT || 8080;
+const port = process.env.PORT ?? 3000;
 app.listen(port, ()=>{
     console.log("app listening ");
 })
@@ -78,10 +85,12 @@ const store = MongoStore.create({
   },
   touchAfter: 24*60*60, // stores time in seconds
 })
+// console.log("This part working 1");
 
 store.on("error", (err)=>{
   console.log("Error in Mongo Sessions " + err);
 })
+// console.log("This part working 2");
 
 const sessionvalue = {
   store: store,
@@ -95,6 +104,7 @@ const sessionvalue = {
   };
 app.use(session(sessionvalue));
 app.use(flash()); //for using the flash function.
+// console.log("This part working 3");
  //todo Always use passport after sessionn because it implemented through session and memorise its value by using sessions
  app.use(passport.initialize());
 app.use(passport.session());
@@ -108,12 +118,16 @@ app.use((req, res, next)=>{
   res.locals.currUser = req.user;
   next();
 });
+// console.log("This part working 4");
 app.get("/showAll", controllerApp.showAll);
+
+// console.log("This part working 5");
 
 //todo Using the router
 app.use("/cookies", cookie);
 app.use("/listing", Rlist);
 app.use("/", Ruser);
+// console.log("This part working 6");
 
 //todo Applying route.route() to combine both get and post route on single which are on the same path
 
@@ -121,7 +135,7 @@ app.get("/newlisting", isLoggedin, wrapAsync (async(req, res)=>{
       res.render("newlist.ejs", {});
 })
 )
- //todo using wrapAsync here instead of try catch you can use both . In next i used try catch
+//todo using wrapAsync here instead of try catch you can use both . In next i used try catch
 app.post ("/newlisting",isLoggedin, upload.single("listing[img]"), errorValidate, wrapAsync( controllerApp.newlist)
 );
 //todo Uploading My photo for about section
@@ -130,7 +144,7 @@ app.get("/myphoto", (req, res)=>{
 })
 app.post("/myphoto" , upload.single("myphoto") , (req, res)=>{
   try{
-
+    
     console.log(req.file);
     res.send("Photo send successfully");
   } catch(err){
@@ -138,14 +152,14 @@ app.post("/myphoto" , upload.single("myphoto") , (req, res)=>{
   }
 })
 app.get("/edit/:id",isLoggedin, controllerApp.getEdit);
+app.put("/edit/:id",isLoggedin, upload.single("imgurl"), controllerApp.postEdit );
 try{
-  app.put("/edit/:id",isLoggedin, upload.single("imgurl"), controllerApp.postEdit );
 }
 catch(err){
   next(err);
 }
- //todo Adding AboutSection
- app.get("/about", async(req, res)=>{
+//todo Adding AboutSection
+app.get("/about", async(req, res)=>{
   res.render("about.ejs");
 })
 app.delete("/delete/:id",isLoggedin, controllerApp.destroy);
@@ -154,7 +168,7 @@ app.get("/approved",async (req, res,next)=>{
   //  let list = await listing.find({approved: false});
   let list = await listing.find({ approved: false });
 if (!Array.isArray(list)) {
-   list = []; // Ensure it's always an array
+  list = []; // Ensure it's always an array
 }
   res.render("approved.ejs",{list})
 })
@@ -167,9 +181,10 @@ app.post("/approved/:id", async(req, res, next)=>{
 //todo app.all is used to accept all the request from any server
 app.all("*", (req, res, next )=>{
  res.render("about.ejs");
-  // next(new myError(400, 'please recheck root '));
+ // next(new myError(400, 'please recheck root '));
 })
 app.use((err, req, res , next)=>{
   let {status , message} = err;
   res.render("error.ejs" , {status, message});
 });
+  // console.log("This part working 7");
